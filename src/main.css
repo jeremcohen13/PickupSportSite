@@ -199,3 +199,74 @@ body {
   width: 800px;
   height: 600px;
 }
+li {
+  list-style-type: none;
+  margin: 0;
+}
+nav {
+  width: 100vw;
+  background-color: #d6efff;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.a {
+  text-decoration: none;
+  color: black;
+  padding: 2vw;
+  font-family: monospace;
+  display: block;
+}
+.a:hover {
+  background-color: #c6e9ff;
+}
+.card {
+  display: inline-block;
+  position: relative;
+  margin: 3%;
+  height: 300px;
+  width: 34%;
+  font-size: 14pt;
+  font-style: initial;
+  text-align: center;
+  left: 20px;
+  box-sizing: border-box;
+  padding: 30px;
+  transition: transform 1.5s;
+}
+.card:hover {
+  opacity: 0.6px;
+  box-shadow: 10px 10px 5px 5px grey;
+}
+.hockey1 {
+  position: relative;
+  top: 270px;
+  left: 420px;
+}
+.hockey2 {
+  position: relative;
+  top: 213px;
+  left: 350px;
+}
+.hockey3 {
+  position: relative;
+  top: 160px;
+  left: 280.5px;
+}
+.hockey4 {
+  position: relative;
+  top: 110px;
+  left: 55px;
+}
+.hockey5 {
+  position: relative;
+  top: 320px;
+  left: -15px;
+}
+.hockey6 {
+  position: relative;
+  top: 224px;
+  left: -280px;
+}

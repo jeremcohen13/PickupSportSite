@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class UnconnectedAddSport extends Component {
   constructor(props) {
@@ -15,40 +15,35 @@ class UnconnectedAddSport extends Component {
       NewEvent: []
     };
   }
-  handleEvent = event => {
-    console.log("New Event", event.target.value);
-    this.setState({ eventName: event.target.value });
-  };
-  handleDescription = event => {
-    console.log("description", event.target.value);
-    this.setState({ description: event.target.value });
+  handleTitle = event => {
+    console.log("New Title", event.target.value);
+    this.setState({ title: event.target.value });
   };
   handleSportSelect = event => {
     console.log("Select Sport", event.target.value);
     this.setState({ sport: event.target.value });
   };
-  handleLocation = event => {
-    console.log("Select Location", event.target.value);
-    this.setState({ location: event.target.value });
-  };
   handleDate = event => {
     console.log("Select Date", event.target.value);
     this.setState({ date: event.target.value });
   };
-  handleFriend = event => {
-    console.log("Select friends", event.target.value);
-    this.setState({ friends: event.target.value });
+  handleLocation = event => {
+    console.log("Select Location", event.target.value);
+    this.setState({ location: event.target.value });
+  };
+  handleAmount = event => {
+    console.log("Select amount", event.target.value);
+    this.setState({ amount: event.target.value });
   };
   handleSubmit = async event => {
     event.preventDefault();
     console.log("event created");
     let data = new FormData();
-    data.append("title", this.state.eventName);
-    data.append("description", this.state.description);
-    data.append("Sport Select", this.state.SportSelect);
-    data.append("Select Location", this.state.location);
-    data.append("Select Date", this.state.date);
-    data.append("Select friends", this.state.friends);
+    data.append("title", this.state.title);
+    data.append("sport", this.state.sport);
+    data.append("location", this.state.location);
+    data.append("date", this.state.date);
+    data.append("amount", this.state.amount);
     console.log(data);
     let fetcheddata = await fetch("/AddEvent", {
       method: "POST",
@@ -62,8 +57,8 @@ class UnconnectedAddSport extends Component {
       type: "add-event",
       event: newEvent.newEvent
     });
-    window.alert("Your event has been created");
-    this.props.routerData.push("/GamesBody");
+    ("Your event has been created");
+    this.props.history.push("/GamesBody");
   };
   render = () => {
     return (
@@ -71,10 +66,14 @@ class UnconnectedAddSport extends Component {
         <div className="addheader">
           <h1>Start a Game, {this.props.username}</h1>
         </div>
+        <div>
+          <h3>Name Your Event</h3>
+          <input onChange={this.handleTitle} placeholder="Enter Name" />
+        </div>
         <form className="addsportform" onSubmit={this.handleSubmit}>
-          <div className="addstart">
+          <div className="custom-select">
             <h3>Let's Start By Choosing the Sport</h3>
-            <select onClick={this.handleSportSelect}>
+            <select className="box" onClick={this.handleSportSelect}>
               <option value="basketball">Basketball</option>
               <option value="hockey">Hockey</option>
               <option value="football">Football</option>
@@ -87,16 +86,27 @@ class UnconnectedAddSport extends Component {
           </div>
           <div className="addlocation">
             <h3>Now, let's choose where you want to play</h3>
-            <div id="locationField">
+            <div className="locationField">
               <input
                 onChange={this.handleLocation}
                 placeholder="Choose Location"
               />
             </div>
           </div>
-          <div className="addfriend">
-            <h3>Lastly, let's choose who you want to play with</h3>
-            <input onChange={this.handleFriend} placeholder="Choose Friends" />
+          <div className="custom-select">
+            <h3>Lastly, let's choose how many people you want to play with</h3>
+            <select className="box" onClick={this.handleAmount}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
           </div>
           <div>
             <input
@@ -112,4 +122,4 @@ class UnconnectedAddSport extends Component {
 }
 let AddSport = connect()(UnconnectedAddSport);
 
-export default AddSport;
+export default withRouter(AddSport);

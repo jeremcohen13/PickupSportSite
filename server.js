@@ -6,6 +6,8 @@ let reloadMagic = require("./reload-magic.js");
 let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads" });
 reloadMagic(app);
+let cookieParser = require("cookie-parser");
+app.use(cookieParser());
 // let sha1 = require("sha1");
 app.use("/", express.static("build"));
 app.use("/uploads", express.static("uploads"));
@@ -47,7 +49,6 @@ app.post("/login", upload.none(), (req, res) => {
       res.send(JSON.stringify({ success: false }));
     }
     if (user.password === password) {
-      res.send(JSON.stringify({ success: true }));
       console.log("password matches");
       let sessionId = generateId();
       console.log("generated id", sessionId);
@@ -62,21 +63,32 @@ app.post("/login", upload.none(), (req, res) => {
     res.send(JSON.stringify({ success: false }));
   });
 });
+
+app.post("/logout", upload.none(), (req, res) => {
+  res.send(JSON.stringify({ success: false }));
+});
 app.post("/AddEvent", upload.none(), (req, res) => {
   let sessionId = req.cookies.sid;
   let username = sessions[sessionId];
   let eventName = req.body.title;
-  let eventDesc = req.body.description;
+  let eventLoc = req.body.location;
+  let eventDate = req.body.date;
+  let eventSport = req.body.sport;
+  let eventAmount = req.body.amount;
   let EventID = generateId();
   let newEvent = {
-    description: eventDesc,
-    eventName: eventName,
+    location: eventLoc,
+    title: eventName,
+    date: eventDate,
+    amount: eventAmount,
+    sport: eventSport,
     ID: EventID,
     user: username,
     userId: req.cookies.sid
   };
   JSON.stringify(newEvent);
   console.log("event added");
+  res.send({ newEvent: newEvent, success: true });
 });
 
 app.all("/*", (req, res, next) => {

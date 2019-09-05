@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
+import { Redirect } from "react-router";
 class UnconnectedHeader extends Component {
   handleLogout = async event => {
     event.preventDefault();
@@ -12,24 +12,43 @@ class UnconnectedHeader extends Component {
       body: data,
       credentials: "include"
     });
+    return <Redirect to="/Login" />;
   };
   render = () => {
     return (
-      <div class="navbar">
-        <Link to="/AddSport">Add event</Link>
-        <div class="dropdown">
-          <div class="dropdown-content">
-            <button className="headerforms" onClick={this.handleLogout}>
-              {" "}
-              Log out{" "}
-            </button>
-            <Link to="/MontrealMaps">Montreal Maps</Link>
-            <Link to="/TorontoMaps">Toronto Maps</Link>
-            <Link to="/AddUsers">Add user</Link>
-            <Link to="/GamesBody">Game</Link>
-            <Link to="/Calendar">Calendar</Link>
-          </div>
-        </div>
+      <div className="navbar">
+        <nav>
+          <ul>
+            <li>
+              <Link className="a" to="/FrontPage">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link className="a" to="/GamesBody">
+                Games
+              </Link>
+            </li>
+            <li>
+              <Link className="a" to="/AddSport">
+                {" "}
+                Add Sport{" "}
+              </Link>
+            </li>
+            <li>
+              <Link className="a" to="/MontrealMaps">
+                {" "}
+                Montreal Maps{" "}
+              </Link>
+            </li>
+            <li>
+              <Link className="a" to="/TorontoMaps">
+                {" "}
+                Toronto Maps{" "}
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </div>
     );
   };
