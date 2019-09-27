@@ -8,7 +8,7 @@ class UnconnectedLoginSignup extends Component {
     this.state = {
       loginUsernameInput: "",
       loginPasswordInput: "",
-      username: undefined,
+      username: "",
       signupUsernameInput: "",
       signupPasswordInput: "",
       signuptoggle: false,

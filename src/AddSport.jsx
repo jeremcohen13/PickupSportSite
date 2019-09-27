@@ -9,7 +9,7 @@ class UnconnectedAddSport extends Component {
       eventName: "",
       description: "",
       location: "",
-      SportSelect: "",
+      Sport: "basketball",
       date: "",
       friends: "",
       NewEvent: []
@@ -57,7 +57,6 @@ class UnconnectedAddSport extends Component {
       type: "add-event",
       event: newEvent.newEvent
     });
-    ("Your event has been created");
     this.props.history.push("/GamesBody");
   };
   render = () => {
@@ -73,7 +72,7 @@ class UnconnectedAddSport extends Component {
         <form className="addsportform" onSubmit={this.handleSubmit}>
           <div className="custom-select">
             <h3>Let's Start By Choosing the Sport</h3>
-            <select className="box" onClick={this.handleSportSelect}>
+            <select className="box" onChange={this.handleSportSelect}>
               <option value="basketball">Basketball</option>
               <option value="hockey">Hockey</option>
               <option value="football">Football</option>
@@ -95,7 +94,7 @@ class UnconnectedAddSport extends Component {
           </div>
           <div className="custom-select">
             <h3>Lastly, let's choose how many people you want to play with</h3>
-            <select className="box" onClick={this.handleAmount}>
+            <select className="box" onChange={this.handleAmount}>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>

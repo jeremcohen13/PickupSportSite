@@ -9,6 +9,7 @@ reloadMagic(app);
 let cookieParser = require("cookie-parser");
 app.use(cookieParser());
 // let sha1 = require("sha1");
+app.use("/", express.static("build/dist"));
 app.use("/", express.static("build"));
 app.use("/uploads", express.static("uploads"));
 let dbo = undefined;
@@ -47,6 +48,7 @@ app.post("/login", upload.none(), (req, res) => {
     }
     if (user === null) {
       res.send(JSON.stringify({ success: false }));
+      return;
     }
     if (user.password === password) {
       console.log("password matches");

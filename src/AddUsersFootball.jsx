@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { EventEmitter } from "events";
 import { throws } from "assert";
-import "./AddUsersHockey.css";
 
-class UnconnectedAddUsersHockey extends Component {
+class UnconnectedAddUsersFootball extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,8 +40,6 @@ class UnconnectedAddUsersHockey extends Component {
     };
   };
 
-  // event.positions= [{title,player}]
-
   render = () => {
     console.log("this.state.event.positions", this.state.event.positions);
 
@@ -64,7 +61,7 @@ class UnconnectedAddUsersHockey extends Component {
           })}
         </div>
         <div>
-          <img src="/uploads/rink.jpg" width="900px" />
+          <img src="/uploads/field.jpg" width="900px" />
         </div>
       </div>
     );
@@ -79,6 +76,6 @@ let mapStateToProps = state => {
   };
 };
 
-let AddUsersHockey = connect(mapStateToProps)(UnconnectedAddUsersHockey);
+let AddUsersFootball = connect(mapStateToProps)(UnconnectedAddUsersFootball);
 
-export default AddUsersHockey;
+export default AddUsersFootball;

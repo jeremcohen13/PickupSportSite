@@ -1,21 +1,25 @@
 import React, { Component } from "react";
-import Home from "./Home.jsx";
+import Header from "./Header.jsx";
 import MontrealMaps from "./MontrealMaps.jsx";
 import AddSport from "./AddSport.jsx";
 import { BrowserRouter, Route } from "react-router-dom";
 import RatingSystem from "./ratingsystem.jsx";
 import TorontoMaps from "./TorontoMaps.jsx";
-import AddUsers from "./AddUsers.jsx";
-import PublicCourt from "./GamesBody.jsx";
+import AddUsersBasketball from "./AddUsersBasketball.jsx";
 import Calendar from "./Calendar.jsx";
 import AddUsersHockey from "./AddUsersHockey.jsx";
+import GamesBody from "./GamesBody.jsx";
+import { connect } from "react-redux";
+import AddUsersFootball from "./AddUsersFootball.jsx";
+import AddUsersBaseball from "./AddUsersBaseball.jsx";
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       usernameInput: "",
       passwordInput: "",
-      username: undefined,
+      username: "",
       setusername: "",
       setpwd: "",
       signuptoggle: false
@@ -23,8 +27,7 @@ class App extends Component {
   }
   // renderSport = routerData => {
   //   let eventID = routerData.math.params.id;
-  //   let event = this.props.events(event => eventID === event.id)[0];
-  //   return <PublicCourt event={event} />;
+  //   console.log(eventID);
   // };
   usernameChange = evt => {
     console.log("login username:", evt.target.value);
@@ -51,89 +54,92 @@ class App extends Component {
     }
   };
 
-  // usernameSet = evt => {
-  //   console.log("set username:", evt.target.value, this.state);
-  //   this.setState({ setusername: evt.target.value });
-  // };
-  // passwordSet = evt => {
-  //   console.log("set password:", evt.target.value);
-  //   this.setState({ setpwd: evt.target.value });
-  // };
-  // submitsignupHandler = async evt => {
-  //   evt.preventDefault();
-  //   console.log("set username", this.state.setusername);
-  //   console.log("set password", this.state.setpwd);
-  //   let username = this.state.setusername;
-  //   let password = this.state.setpwd;
-  //   let data = new FormData();
-  //   data.append("username", username);
-  //   data.append("password", password);
-  //   let response = await fetch("/signup", { method: "POST", body: data });
-  //   let body = await response.text();
-  //   console.log("/signup response", body);
-  //   body = JSON.parse(body);
-  //   if (!body.success) {
-  //     this.setState({ username: name });
-  //   }
-  // };
-  // signuptoggle = () => {
-  //   this.setState({ signuptoggle: !this.state.signuptoggle });
-  // };
+  usernameSet = evt => {
+    console.log("set username:", evt.target.value, this.state);
+    this.setState({ setusername: evt.target.value });
+  };
+  passwordSet = evt => {
+    console.log("set password:", evt.target.value);
+    this.setState({ setpwd: evt.target.value });
+  };
+  submitsignupHandler = async evt => {
+    evt.preventDefault();
+    console.log("set username", this.state.setusername);
+    console.log("set password", this.state.setpwd);
+    let username = this.state.setusername;
+    let password = this.state.setpwd;
+    let data = new FormData();
+    data.append("username", username);
+    data.append("password", password);
+    let response = await fetch("/signup", { method: "POST", body: data });
+    let body = await response.text();
+    console.log("/signup response", body);
+    body = JSON.parse(body);
+    if (body.success) {
+      this.props.dispatch({
+        type: "login-success",
+        username: this.state.setusername
+      });
+    }
+  };
+  signuptoggle = () => {
+    this.setState({ signuptoggle: !this.state.signuptoggle });
+  };
   render = () => {
-    // console.log(this.state.signuptoggle);
-    // if (this.state.username === undefined) {
-    //   if (this.state.signuptoggle === false) {
-    //     return (
-    //       <div className="login-page">
-    //         <div className="form">
-    //           <form className="register-form">
-    //             <input
-    //               type="text"
-    //               onChange={this.usernameSet}
-    //               placeholder="Create username"
-    //             />
-    //             <input
-    //               type="text"
-    //               onChange={this.passwordSet}
-    //               placeholder="Create password"
-    //             />
-    //             <button onClick={this.submitsignupHandler}>create</button>
-    //             <p>Already registered?</p>
-    //             <p className="message" onClick={this.signuptoggle}>
-    //               Sign in
-    //             </p>
-    //           </form>
-    //         </div>
-    //       </div>
-    //     );
-    //   }
-    //   return (
-    //     <div className="login-page">
-    //       <div className="form">
-    //         <form className="login-form">
-    //           <input
-    //             type="text"
-    //             onChange={this.usernameChange}
-    //             placeholder="username"
-    //           />
-    //           <input
-    //             type="text"
-    //             onChange={this.passwordChange}
-    //             placeholder="password"
-    //           />
-    //           <button onClick={this.submitloginHandler}>login</button>
-    //           <p>Not registered? </p>
-    //           <p className="message" onClick={this.signuptoggle}>
-    //             Create an account{" "}
-    //           </p>
-    //         </form>
-    //       </div>
-    //     </div>
-    //   );
-    // }
+    console.log(this.state.signuptoggle);
+    if (!this.props.loggedIn) {
+      if (this.state.signuptoggle === false) {
+        return (
+          <div className="login-page">
+            <div className="form">
+              <form className="register-form">
+                <input
+                  type="text"
+                  onChange={this.usernameSet}
+                  placeholder="Create username"
+                />
+                <input
+                  type="password"
+                  onChange={this.passwordSet}
+                  placeholder="Create password"
+                />
+                <button onClick={this.submitsignupHandler}>create</button>
+                <p>Already registered?</p>
+                <p className="message" onClick={this.signuptoggle}>
+                  Sign in
+                </p>
+              </form>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="login-page">
+          <div className="form">
+            <form className="login-form">
+              <input
+                type="text"
+                onChange={this.usernameChange}
+                placeholder="username"
+              />
+              <input
+                type="text"
+                onChange={this.passwordChange}
+                placeholder="password"
+              />
+              <button onClick={this.submitloginHandler}>login</button>
+              <p>Not registered? </p>
+              <p className="message" onClick={this.signuptoggle}>
+                Create an account{" "}
+              </p>
+            </form>
+          </div>
+        </div>
+      );
+    }
     return (
       <BrowserRouter>
-        <Home username={this.props.username} />
+        <Header username={this.props.username} />
         <Route
           exact={true}
           path="/MontrealMaps"
@@ -150,22 +156,38 @@ class App extends Component {
           path="/TorontoMaps"
           render={() => <TorontoMaps />}
         />
-        {/* <Route
+        <Route
           exact={true}
-          path="/AddUsers/:id"
-          render={routerData => (
-            <AddUsers userID={routerData.match.params.id} />
-          )}
-        /> */}
-        <Route exact={true} path="/GamesBody" render={() => <PublicCourt />} />
+          path="/AddUsersBasketball"
+          render={() => <AddUsersBasketball />}
+        />
+        <Route exact={true} path="/GamesBody" render={() => <GamesBody />} />
         <Route exact={true} path="/Calendar" render={() => <Calendar />} />
-        {/* <Route
+        <Route
           exact={true}
-          path="/AddUsersHockey/:id"
-          render={routerData => (
-            <AddUsersHockey userID={routerData.match.params.id} /> */}
+          path="/AddUsersHockey"
+          render={() => <AddUsersHockey />}
+        />
+        <Route
+          exact={true}
+          path="/AddUsersFootball"
+          render={() => <AddUsersFootball />}
+        />
+        <Route
+          exact={true}
+          path="/AddUsersBaseball"
+          render={() => <AddUsersBaseball />}
+        />
       </BrowserRouter>
     );
   };
 }
-export default App;
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    loggedIn: state.loggedIn,
+    username: state.username
+  };
+};
+
+export default connect(mapStateToProps)(App);

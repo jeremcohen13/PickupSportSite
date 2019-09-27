@@ -16,12 +16,12 @@ class UnconnectedHeader extends Component {
   };
   render = () => {
     return (
-      <div className="navbar">
+      <div className="header">
         <nav>
           <ul>
             <li>
-              <Link className="a" to="/FrontPage">
-                Home
+              <Link to="/GamesBody">
+                <img src="../uploads/logo.png" height="100px" />
               </Link>
             </li>
             <li>
@@ -38,13 +38,7 @@ class UnconnectedHeader extends Component {
             <li>
               <Link className="a" to="/MontrealMaps">
                 {" "}
-                Montreal Maps{" "}
-              </Link>
-            </li>
-            <li>
-              <Link className="a" to="/TorontoMaps">
-                {" "}
-                Toronto Maps{" "}
+                Montreal Parks{" "}
               </Link>
             </li>
           </ul>

@@ -7,8 +7,13 @@ let reducer = (state, action) => {
   if (action.type === "logout-success") {
     return { ...state, loggedIn: false };
   }
-  if (action.type === "add-sport") {
-    return { ...state, items: state.items.concat(action.item) };
+  if (action.type === "add-event") {
+    console.log(state);
+    return { ...state, events: state.events.concat(action.event) };
+  }
+  if (action.type === "add-player") {
+    console.log(state);
+    return { ...state, player: state.p };
   }
   if (action.type === "select-location") {
     return { ...state, location: action.value };
@@ -33,7 +38,9 @@ const store = createStore(
     location: [],
     date: [],
     amount: [],
-    title: ""
+    title: "",
+    events: [],
+    player: ""
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

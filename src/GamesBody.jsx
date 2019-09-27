@@ -2,20 +2,42 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { initialData } from "./Data.js";
-class UnconnectedPublicCourt extends Component {
+class UnconnectedGamesBody extends Component {
   render = () => {
+    let sportsPaths = {
+      basketball: "AddUsersBasketball",
+      hockey: "AddUsersHockey",
+      football: "AddUsersFootball",
+      tennis: "AddUsersTennis"
+    };
+    console.log(this.props.events);
+
     return (
       <div className="frontpage">
         <div>
+          <h1 alight="centre">Pick a Game!</h1>
           {this.props.events.map(event => {
+            let sportPath = sportsPaths[event.sport];
             return (
-              <div className="card">
-                <div>{event.title}</div>
-                <div>{event.location}</div>
-                <div>{event.amount}</div>
-                <div>{event.date}</div>
-                <div>{event.sport}</div>
-              </div>
+              <Link to={`/${sportPath}`}>
+                <div className="card">
+                  <div>
+                    <h1>{event.title}</h1>
+                  </div>
+                  <div>
+                    <h2>{event.location}</h2>
+                  </div>
+                  <div>
+                    <h3>{event.date}</h3>
+                  </div>
+                  <div>
+                    <h4>{event.sport}</h4>
+                  </div>
+                  <div>
+                    <h4>{event.amount} people</h4>
+                  </div>
+                </div>
+              </Link>
             );
           })}
         </div>
@@ -33,5 +55,5 @@ let mapStateToProps = state => {
     events: state.events
   };
 };
-let PublicCourt = connect(mapStateToProps)(UnconnectedPublicCourt);
-export default PublicCourt;
+let GamesBody = connect(mapStateToProps)(UnconnectedGamesBody);
+export default GamesBody;

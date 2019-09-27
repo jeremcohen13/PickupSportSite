@@ -222,6 +222,7 @@ ul {
 .a:hover {
   background-color: #c6e9ff;
 }
+@import url(https://fonts.googleapis.com/css?family=Dosis&display=swap);
 .card {
   display: inline-block;
   position: relative;
@@ -229,17 +230,18 @@ ul {
   height: 300px;
   width: 34%;
   font-size: 14pt;
-  font-style: initial;
-  text-align: center;
+  font-family: "Dosis", sans-serif;
+  text-align: left;
+  border-radius: 6px;
   left: 20px;
   box-sizing: border-box;
   padding: 30px;
-  transition: transform 1.5s;
 }
 .card:hover {
   opacity: 0.6px;
   box-shadow: 10px 10px 5px 5px grey;
 }
+/* .hockey-
 .hockey1 {
   position: relative;
   top: 270px;
@@ -269,4 +271,4 @@ ul {
   position: relative;
   top: 224px;
   left: -280px;
-}
+} */
