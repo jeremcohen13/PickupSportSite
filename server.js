@@ -7,6 +7,12 @@ let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads" });
 //reloadMagic(app);
 let cookieParser = require("cookie-parser");
+
+const config = require(__dirname + "/config.json");
+const profile = process.argv[2];
+console.log(`profile: ${profile}`);
+console.log(JSON.stringify(config));
+
 app.use(cookieParser());
 // let sha1 = require("sha1");
 app.use("/", express.static("build/dist"));
@@ -97,6 +103,6 @@ app.all("/*", (req, res, next) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
-app.listen(4000, "0.0.0.0", () => {
+app.listen(config["profiles"][profile]["port"], "0.0.0.0", () => {
   console.log("Server running on port 4000");
 });
