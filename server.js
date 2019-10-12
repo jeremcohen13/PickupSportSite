@@ -2,10 +2,10 @@ let express = require("express");
 let app = express();
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
-let reloadMagic = require("./reload-magic.js");
+//let reloadMagic = require("./reload-magic.js");
 let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads" });
-reloadMagic(app);
+//reloadMagic(app);
 let cookieParser = require("cookie-parser");
 app.use(cookieParser());
 // let sha1 = require("sha1");
@@ -18,7 +18,7 @@ let url =
 MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
   dbo = db.db("personal-project");
 });
-reloadMagic(app);
+//reloadMagic(app);
 let sessions = {};
 
 let generateId = () => {
