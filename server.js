@@ -7,8 +7,7 @@ let upload = multer({ dest: __dirname + "/uploads" });
 let cookieParser = require("cookie-parser");
 
 const config = require(__dirname + "/config.json");
-const profile = process.argv[2];
-console.log(`profile: ${profile}`);
+const profile = process.argv[2]? process.argv[2]: 'prod';
 
 app.use(cookieParser());
 // let sha1 = require("sha1");
@@ -44,37 +43,42 @@ app.post("/signup", upload.none(), (req, res) => {
 
 app.post("/login", upload.none(), (req, res) => {
   console.log("login", req.body);
-  let username = req.body.username;
-  let password = req.body.password;
-  dbo.collection("users").findOne({ username: username }, (err, user) => {
+  const {username, password} = req.body;
+  const query = {
+    $and: [
+      {'username': {$eq: username}},
+      {'password': {$eq: password}}
+    ]
+  }
+  const projection = {
+    username: 1,
+    password: 1
+  }
+  dbo.collection("users").findOne(query, projection, (err, user) => {
     if (err) {
       console.log("/login error", err);
       res.send(JSON.stringify({ success: false }));
       return;
     }
-    if (user === null) {
+    if (!user) {
+      console.log(`couldn't find user with username: ${username}`)
       res.send(JSON.stringify({ success: false }));
       return;
     }
-    if (user.password === password) {
-      console.log("password matches");
-      let sessionId = generateId();
-      console.log("generated id", sessionId);
-      sessions[sessionId] = username;
-      res.cookie("sid", sessionId);
-      res.send(JSON.stringify({ success: true }));
-      return;
-    }
-    if (user.password === null) {
-      res.send(JSON.stringify({ success: false }));
-    }
-    res.send(JSON.stringify({ success: false }));
+
+    console.log(`found in db: username: ${user.username}, password: ${user.password}`)
+    let sessionId = generateId();
+    console.log("generated id", sessionId);
+    sessions[sessionId] = username;
+    res.cookie("sid", sessionId);
+    res.send(JSON.stringify({ success: true }));
   });
 });
 
 app.post("/logout", upload.none(), (req, res) => {
   res.send(JSON.stringify({ success: false }));
 });
+
 app.post("/AddEvent", upload.none(), (req, res) => {
   let sessionId = req.cookies.sid;
   let username = sessions[sessionId];
