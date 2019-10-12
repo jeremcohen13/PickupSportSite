@@ -2,10 +2,8 @@ let express = require("express");
 let app = express();
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
-//let reloadMagic = require("./reload-magic.js");
 let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads" });
-//reloadMagic(app);
 let cookieParser = require("cookie-parser");
 
 const config = require(__dirname + "/config.json");
@@ -23,7 +21,6 @@ let url =
 MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
   dbo = db.db("personal-project");
 });
-//reloadMagic(app);
 let sessions = {};
 
 let generateId = () => {
