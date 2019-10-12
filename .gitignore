@@ -6,8 +6,8 @@
 # production
 /dist
 
-
 /build
+
 # misc
 .DS_Store
 .env.local
@@ -18,6 +18,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
 yarn-lock.json
 yarn.lock

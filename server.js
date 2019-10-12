@@ -2,16 +2,13 @@ let express = require("express");
 let app = express();
 let MongoClient = require("mongodb").MongoClient;
 let ObjectID = require("mongodb").ObjectID;
-let reloadMagic = require("./reload-magic.js");
 let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads" });
-reloadMagic(app);
 let cookieParser = require("cookie-parser");
 
 const config = require(__dirname + "/config.json");
 const profile = process.argv[2];
 console.log(`profile: ${profile}`);
-console.log(JSON.stringify(config));
 
 app.use(cookieParser());
 // let sha1 = require("sha1");
@@ -21,10 +18,9 @@ app.use("/uploads", express.static("uploads"));
 let dbo = undefined;
 let url =
   "mongodb+srv://a:a@personalproject-zknku.mongodb.net/test?retryWrites=true&w=majority";
-MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
+MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
   dbo = db.db("personal-project");
 });
-reloadMagic(app);
 let sessions = {};
 
 let generateId = () => {
@@ -104,5 +100,5 @@ app.all("/*", (req, res, next) => {
 });
 
 app.listen(config["profiles"][profile]["port"], "0.0.0.0", () => {
-  console.log("Server running on port 4000");
+  console.log(`Server running on port ${config["profiles"][profile]["port"]}`);
 });
