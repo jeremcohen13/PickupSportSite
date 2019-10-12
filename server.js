@@ -18,9 +18,13 @@ app.use("/uploads", express.static("uploads"));
 let dbo = undefined;
 let url =
   "mongodb+srv://a:a@personalproject-zknku.mongodb.net/test?retryWrites=true&w=majority";
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
-  dbo = db.db("personal-project");
-});
+MongoClient.connect(
+  url,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err, db) => {
+    dbo = db.db("personal-project");
+  }
+);
 let sessions = {};
 
 let generateId = () => {
