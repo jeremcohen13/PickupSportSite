@@ -14,8 +14,8 @@ import AddUsersFootball from "./AddUsersFootball.jsx";
 import AddUsersBaseball from "./AddUsersBaseball.jsx";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       usernameInput: "",
       passwordInput: "",
