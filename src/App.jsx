@@ -14,8 +14,8 @@ import AddUsersFootball from "./AddUsersFootball.jsx";
 import AddUsersBaseball from "./AddUsersBaseball.jsx";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       usernameInput: "",
       passwordInput: "",
@@ -188,11 +188,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    loggedIn: state.loggedIn,
-    username: state.username
-  };
-};
+const mapStateToProps = state => ({
+  loggedIn: state.loggedIn,
+  username: state.username
+});
 
 export default connect(mapStateToProps)(App);
