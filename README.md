@@ -22,11 +22,10 @@ npm install
 # How to run
 
 ```{bash}
-npm buildstart:prod # uses port 80
+npm buildstart:prod # serves on port 80
 ```
 
 or
 
 ```{bash}
-npm buildstart:dev # port 4000
-```
+npm buildstart:dev # serves on port 4000
