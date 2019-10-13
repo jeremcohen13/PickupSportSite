@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+
 let reducer = (state, action) => {
   console.log(state);
   if (action.type === "login-success") {
@@ -30,6 +31,7 @@ let reducer = (state, action) => {
   }
   return state;
 };
+
 const store = createStore(
   reducer,
   {

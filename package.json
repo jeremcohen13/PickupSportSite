@@ -2,10 +2,16 @@
   "name": "webpack-react-tutorial",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "build": "webpack --mode production"
+    "build:prod": "rm -rf build && webpack --mode production",
+    "start:prod": "node server.js prod",
+    "buildstart:prod": "npm run build:prod && npm run start:prod",
+
+    "build:dev": "webpack --watch",
+    "start:dev": "nodemon server.js dev",
+    "buildstart:dev" : "npm-run-all -p build:dev start:dev"
   },
   "keywords": [],
   "author": "Jacques Le Normand",
