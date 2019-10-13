@@ -50,7 +50,10 @@ class App extends Component {
     console.log("/login response", body);
     body = JSON.parse(body);
     if (body.success) {
-      this.setState({ username: name });
+      this.props.dispatch({
+        type: "login-success",
+        username: this.state.usernameInput
+      });
     }
   };
 
@@ -86,9 +89,9 @@ class App extends Component {
     this.setState({ signuptoggle: !this.state.signuptoggle });
   };
   render = () => {
-    console.log(this.state.signuptoggle);
+    console.log(`loggedIn: ${this.props.loggedIn}, signuptoggle: ${this.state.signuptoggle}`)
     if (!this.props.loggedIn) {
-      if (this.state.signuptoggle === false) {
+      if (this.state.signuptoggle === false) { // trying to sign up
         return (
           <div className="login-page">
             <div className="form">
@@ -112,75 +115,77 @@ class App extends Component {
             </div>
           </div>
         );
-      }
-      return (
-        <div className="login-page">
-          <div className="form">
-            <form className="login-form">
-              <input
-                type="text"
-                onChange={this.usernameChange}
-                placeholder="username"
-              />
-              <input
-                type="text"
-                onChange={this.passwordChange}
-                placeholder="password"
-              />
-              <button onClick={this.submitloginHandler}>login</button>
-              <p>Not registered? </p>
-              <p className="message" onClick={this.signuptoggle}>
-                Create an account{" "}
-              </p>
-            </form>
+      } else { // trying to log in
+        return (
+          <div className="login-page">
+            <div className="form">
+              <form className="login-form">
+                <input
+                  type="text"
+                  onChange={this.usernameChange}
+                  placeholder="username"
+                />
+                <input
+                  type="text"
+                  onChange={this.passwordChange}
+                  placeholder="password"
+                />
+                <button onClick={this.submitloginHandler}>login</button>
+                <p>Not registered? </p>
+                <p className="message" onClick={this.signuptoggle}>
+                  Create an account{" "}
+                </p>
+              </form>
+            </div>
           </div>
-        </div>
+        );
+      }
+    } else { // logged in
+      return (
+        <BrowserRouter>
+          <Header username={this.props.username} />
+          <Route
+            exact={true}
+            path="/MontrealMaps"
+            render={() => <MontrealMaps />}
+          />
+          <Route exact={true} path="/AddSport" render={() => <AddSport />} />
+          <Route
+            exact={true}
+            path="/ratingsystem"
+            render={() => <RatingSystem />}
+          />
+          <Route
+            exact={true}
+            path="/TorontoMaps"
+            render={() => <TorontoMaps />}
+          />
+          <Route
+            exact={true}
+            path="/AddUsersBasketball"
+            render={() => <AddUsersBasketball />}
+          />
+          <Route exact={true} path="/GamesBody" render={() => <GamesBody />} />
+          <Route exact={true} path="/Calendar" render={() => <Calendar />} />
+          <Route
+            exact={true}
+            path="/AddUsersHockey"
+            render={() => <AddUsersHockey />}
+          />
+          <Route
+            exact={true}
+            path="/AddUsersFootball"
+            render={() => <AddUsersFootball />}
+          />
+          <Route
+            exact={true}
+            path="/AddUsersBaseball"
+            render={() => <AddUsersBaseball />}
+          />
+        </BrowserRouter>
       );
     }
-    return (
-      <BrowserRouter>
-        <Header username={this.props.username} />
-        <Route
-          exact={true}
-          path="/MontrealMaps"
-          render={() => <MontrealMaps />}
-        />
-        <Route exact={true} path="/AddSport" render={() => <AddSport />} />
-        <Route
-          exact={true}
-          path="/ratingsystem"
-          render={() => <RatingSystem />}
-        />
-        <Route
-          exact={true}
-          path="/TorontoMaps"
-          render={() => <TorontoMaps />}
-        />
-        <Route
-          exact={true}
-          path="/AddUsersBasketball"
-          render={() => <AddUsersBasketball />}
-        />
-        <Route exact={true} path="/GamesBody" render={() => <GamesBody />} />
-        <Route exact={true} path="/Calendar" render={() => <Calendar />} />
-        <Route
-          exact={true}
-          path="/AddUsersHockey"
-          render={() => <AddUsersHockey />}
-        />
-        <Route
-          exact={true}
-          path="/AddUsersFootball"
-          render={() => <AddUsersFootball />}
-        />
-        <Route
-          exact={true}
-          path="/AddUsersBaseball"
-          render={() => <AddUsersBaseball />}
-        />
-      </BrowserRouter>
-    );
-  };
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
