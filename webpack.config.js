@@ -1,29 +1,30 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
 
 module.exports = {
-  watchOptions: {
-    poll: true,
-    ignored: /node_modules/
+  entry: {
+    javascript: "./src/index.jsx",
   },
-  mode: "development",
-  devtool: "source-map",
   output: {
     publicPath: '/',
     path: path.join(__dirname, "build"),
   },
-  devServer: {
-    port: 3000,
-    overlay: {
-      warnings: true,
-      errors: true
-    },
-    historyApiFallback: {
-      index: '/index.html'
-    },
-    contentBase: path.join(__dirname, "public"),
-    hot: true
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+      fileName: "build/index.html"
+    }),
+  ],
+
+  watchOptions: {
+    poll: true,
+    ignored: /node_modules/
   },
+
+  mode: "development",
+  devtool: "source-map",
+
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
@@ -54,15 +55,4 @@ module.exports = {
     }
     ]
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html"
-    }),
-  ],
-
-  entry: {
-    javascript: "./src/index.jsx",
-    html: "./public/index.html"
-  }
 }

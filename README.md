@@ -8,14 +8,24 @@ Demo: https://www.youtube.com/watch?v=yRn6Ao2ug5o
 
 # Technologies
 
-Front-end : Javascript, React, Redux, CSS, HTML.
+Front-end : Javascript, React, Redux
 
 Back-end : Node.js, Express, MongoDB.
 
+# Dependencies
+
+```{bash}
+npm install -g webpack npm-run-all nodemon
+npm install
+```
+
 # How to run
 
-Install Dependencies: npm install
+```{bash}
+npm buildstart:prod # servers on port 80
+```
 
-# Start Server
+or
 
-with Nodemon: npm start
+```{bash}
+npm buildstart:dev # servers on port 4000
