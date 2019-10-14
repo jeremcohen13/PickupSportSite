@@ -2,6 +2,21 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
 
 module.exports = {
+  entry: {
+    javascript: "./src/index.jsx",
+  },
+  output: {
+    publicPath: '/',
+    path: path.join(__dirname, "build"),
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+      fileName: "build/index.html"
+    }),
+  ],
+
   watchOptions: {
     poll: true,
     ignored: /node_modules/
@@ -40,16 +55,4 @@ module.exports = {
     }
     ]
   },
-
-  plugins: [
-    new HtmlWebpackPlugin()
-  ],
-
-  entry: {
-    javascript: "./src/index.jsx",
-  },
-  output: {
-    publicPath: '/',
-    path: path.join(__dirname, "build"),
-  }
 }
