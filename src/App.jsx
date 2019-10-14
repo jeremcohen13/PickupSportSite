@@ -60,9 +60,9 @@ class App extends Component {
   render = () => {
     if (this.props.loggedIn) {
       return (
-        <React.Fragments>
-          <Header username={this.props.username} />
+        <div>
           <BrowserRouter>
+            <Header username={this.props.username} />
             <Route exact={true} path="/MontrealMaps"       render={() => <MontrealMaps/>}/>
             <Route exact={true} path="/AddSport"           render={() => <AddSport/>}/>
             <Route exact={true} path="/ratingsystem"       render={() => <RatingSystem/>}/>
@@ -74,7 +74,7 @@ class App extends Component {
             <Route exact={true} path="/AddUsersFootball"   render={() => <AddUsersFootball/>}/>
             <Route exact={true} path="/AddUsersBaseball"   render={() => <AddUsersBaseball/>}/>
           </BrowserRouter>
-        </React.Fragments>
+        </div>
       );
     } else {
       return (
