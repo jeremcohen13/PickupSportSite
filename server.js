@@ -33,7 +33,6 @@ app.use("/", express.static("build"));
 app.use("/", express.static("public"));
 
 app.post("/signup", upload.none(), asyncHandler(async (req, res) => {
-  throw "fuck it"
   console.log("signup", req.body);
   const { username, password } = req.body;
   dbo.collection("users").insertOne({ username, password });
