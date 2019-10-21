@@ -46,17 +46,17 @@ app.post("/signup", upload.none(), asyncHandler(async (req, res) => {
 app.post("/login", upload.none(), asyncHandler(async (req, res) => {
   console.log("login", req.body);
   const {username, password} = req.body;
-  try {
-    const query = { $and: [
-      { 'username': { $eq: username } },
-      { 'password': { $eq: password } }
-    ] };
-    const columns = { username: 1, password: 1 };
 
-    const user = await dbo.collection("users").findOne(query, columns);
+  const query = { $and: [
+    { 'username': { $eq: username } },
+    { 'password': { $eq: password } }
+  ] };
+  const columns = { username: 1, password: 1 };
+  const user = await dbo.collection("users").findOne(query, columns);
 
+  if (user) {
     res.json({ success: true });
-  } catch (e) {
+  } else {
     res.json({ success: false });
   }
 }));
@@ -65,7 +65,7 @@ app.post("/logout", upload.none(), asyncHandler(async (req, res) => {
   res.send(JSON.stringify({ success: false }));
 }));
 
-app.post("/AddEvent", upload.none(), asyncHandler(async (req, res) => {
+app.post("/addevent", upload.none(), asyncHandler(async (req, res) => {
   let eventName = req.body.title;
   let eventLoc = req.body.location;
   let eventDate = req.body.date;

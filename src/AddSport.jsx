@@ -45,7 +45,7 @@ class UnconnectedAddSport extends Component {
     data.append("date", this.state.date);
     data.append("amount", this.state.amount);
     console.log(data);
-    let fetcheddata = await fetch("/AddEvent", {
+    let fetcheddata = await fetch("/addevent", {
       method: "POST",
       body: data,
       credentials: "include"
