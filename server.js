@@ -35,42 +35,30 @@ app.use("/", express.static("public"));
 app.post("/signup", upload.none(), asyncHandler(async (req, res) => {
   console.log("signup", req.body);
   const { username, password } = req.body;
-  dbo.collection("users").insertOne({ username, password });
-  res.send(JSON.stringify({ success: true }));
+  try {
+    const x = await dbo.collection("users").insertOne({ username, password });
+    res.json({ success: true });
+  } catch (e) {
+    res.json({ success: false })
+  }
 }));
 
 app.post("/login", upload.none(), asyncHandler(async (req, res) => {
   console.log("login", req.body);
   const {username, password} = req.body;
-  const query = {
-    $and: [
-      {'username': {$eq: username}},
-      {'password': {$eq: password}}
-    ]
-  }
-  const projection = {
-    username: 1,
-    password: 1
-  }
-  dbo.collection("users").findOne(query, projection, (err, user) => {
-    if (err) {
-      console.log("/login error", err);
-      res.send(JSON.stringify({ success: false }));
-      return;
-    }
-    if (!user) {
-      console.log(`couldn't find user with username: ${username}`)
-      res.send(JSON.stringify({ success: false }));
-      return;
-    }
+  try {
+    const query = { $and: [
+      { 'username': { $eq: username } },
+      { 'password': { $eq: password } }
+    ] };
+    const columns = { username: 1, password: 1 };
 
-    console.log(`found in db: username: ${user.username}, password: ${user.password}`)
-    let sessionId = generateId();
-    console.log("generated id", sessionId);
-    sessions[sessionId] = username;
-    res.cookie("sid", sessionId);
-    res.send(JSON.stringify({ success: true }));
-  });
+    const user = await dbo.collection("users").findOne(query, projection);
+
+    res.json({ success: true });
+  } catch (e) {
+    res.json({ success: false });
+  }
 }));
 
 app.post("/logout", upload.none(), asyncHandler(async (req, res) => {
@@ -78,8 +66,6 @@ app.post("/logout", upload.none(), asyncHandler(async (req, res) => {
 }));
 
 app.post("/AddEvent", upload.none(), asyncHandler(async (req, res) => {
-  let sessionId = req.cookies.sid;
-  let username = sessions[sessionId];
   let eventName = req.body.title;
   let eventLoc = req.body.location;
   let eventDate = req.body.date;

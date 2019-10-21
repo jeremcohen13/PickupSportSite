@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+
 class UnconnectedHeader extends Component {
   handleLogout = async event => {
     event.preventDefault();
@@ -14,6 +15,7 @@ class UnconnectedHeader extends Component {
     });
     return <Redirect to="/Login" />;
   };
+
   render = () => {
     return (
       <div className="header">
