@@ -32,16 +32,15 @@ let generateId = () => {
 app.use("/", express.static("build"));
 app.use("/", express.static("public"));
 
-app.post("/signup", upload.none(), (req, res) => {
+app.post("/signup", upload.none(), asyncHandler(async (req, res) => {
+  throw "fuck it"
   console.log("signup", req.body);
-  let name = req.body.username;
-  let pwd = req.body.password;
-  console.log("TESTING:", name, pwd);
-  dbo.collection("users").insertOne({ username: name, password: pwd });
+  const { username, password } = req.body;
+  dbo.collection("users").insertOne({ username, password });
   res.send(JSON.stringify({ success: true }));
-});
+}));
 
-app.post("/login", upload.none(), (req, res) => {
+app.post("/login", upload.none(), asyncHandler(async (req, res) => {
   console.log("login", req.body);
   const {username, password} = req.body;
   const query = {
@@ -73,13 +72,13 @@ app.post("/login", upload.none(), (req, res) => {
     res.cookie("sid", sessionId);
     res.send(JSON.stringify({ success: true }));
   });
-});
+}));
 
-app.post("/logout", upload.none(), (req, res) => {
+app.post("/logout", upload.none(), asyncHandler(async (req, res) => {
   res.send(JSON.stringify({ success: false }));
-});
+}));
 
-app.post("/AddEvent", upload.none(), (req, res) => {
+app.post("/AddEvent", upload.none(), asyncHandler(async (req, res) => {
   let sessionId = req.cookies.sid;
   let username = sessions[sessionId];
   let eventName = req.body.title;
@@ -101,7 +100,7 @@ app.post("/AddEvent", upload.none(), (req, res) => {
   JSON.stringify(newEvent);
   console.log("event added");
   res.send({ newEvent: newEvent, success: true });
-});
+}));
 
 app.all("/*", (req, res, next) => {
   res.sendFile(__dirname + "/build/index.html");
@@ -110,3 +109,11 @@ app.all("/*", (req, res, next) => {
 app.listen(config["profiles"][profile]["port"], "0.0.0.0", () => {
   console.log(`Server running on port ${config["profiles"][profile]["port"]}`);
 });
+
+function asyncHandler(fn) {
+  return (req, res, next) => {
+    return Promise
+      .resolve( fn(req, res, next) )
+      .catch(next)
+  }
+}
