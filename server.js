@@ -53,7 +53,7 @@ app.post("/login", upload.none(), asyncHandler(async (req, res) => {
     ] };
     const columns = { username: 1, password: 1 };
 
-    const user = await dbo.collection("users").findOne(query, projection);
+    const user = await dbo.collection("users").findOne(query, columns);
 
     res.json({ success: true });
   } catch (e) {
