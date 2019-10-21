@@ -1,7 +1,6 @@
 import React, { Component, Fragments } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
-
 import Header from "./Header.jsx";
 import MontrealMaps from "./MontrealMaps.jsx";
 import AddSport from "./AddSport.jsx";
@@ -20,18 +19,22 @@ class App extends Component {
     this.state = {
       username: "",
       password: "",
-      loginNOTsignup: false // default to sig up, not login
+      loginNOTsignup: false // default to sign up, not login
     };
   }
 
   usernameSet = evt => {
     const username = evt.target.value;
-    console.log(`existing username: ${this.state.username}, new username: ${username}`);
+    console.log(
+      `existing username: ${this.state.username}, new username: ${username}`
+    );
     this.setState({ username });
   };
   passwordSet = evt => {
     const password = evt.target.value;
-    console.log(`existing password: ${this.state.password}, new password: ${password}`);
+    console.log(
+      `existing password: ${this.state.password}, new password: ${password}`
+    );
     this.setState({ password });
   };
 
@@ -42,7 +45,10 @@ class App extends Component {
     data.append("password", this.state.password);
 
     const path = this.state.loginNOTsignup ? "/login" : "/signup";
-    const body = await (await fetch(path, { method: "POST", body: data })).json();
+    const body = await (await fetch(path, {
+      method: "POST",
+      body: data
+    })).json();
     console.log(`${path} response: ${JSON.stringify(body)}`);
 
     if (body.success) {
@@ -50,6 +56,8 @@ class App extends Component {
         type: "login-success",
         username: this.state.username
       });
+    } else {
+      alert("Username or password is wrong");
     }
   };
 
@@ -63,16 +71,48 @@ class App extends Component {
         <div>
           <BrowserRouter>
             <Header username={this.props.username} />
-            <Route exact={true} path="/MontrealMaps"       render={() => <MontrealMaps/>}/>
-            <Route exact={true} path="/AddSport"           render={() => <AddSport/>}/>
-            <Route exact={true} path="/ratingsystem"       render={() => <RatingSystem/>}/>
-            <Route exact={true} path="/TorontoMaps"        render={() => <TorontoMaps/>}/>
-            <Route exact={true} path="/AddUsersBasketball" render={() => <AddUsersBasketball/>}/>
-            <Route exact={true} path="/GamesBody"          render={() => <GamesBody/>}/>
-            <Route exact={true} path="/Calendar"           render={() => <Calendar/>}/>
-            <Route exact={true} path="/AddUsersHockey"     render={() => <AddUsersHockey/>}/>
-            <Route exact={true} path="/AddUsersFootball"   render={() => <AddUsersFootball/>}/>
-            <Route exact={true} path="/AddUsersBaseball"   render={() => <AddUsersBaseball/>}/>
+            <Route
+              exact={true}
+              path="/MontrealMaps"
+              render={() => <MontrealMaps />}
+            />
+            <Route exact={true} path="/AddSport" render={() => <AddSport />} />
+            <Route
+              exact={true}
+              path="/ratingsystem"
+              render={() => <RatingSystem />}
+            />
+            <Route
+              exact={true}
+              path="/TorontoMaps"
+              render={() => <TorontoMaps />}
+            />
+            <Route
+              exact={true}
+              path="/AddUsersBasketball"
+              render={() => <AddUsersBasketball />}
+            />
+            <Route
+              exact={true}
+              path="/GamesBody"
+              render={() => <GamesBody />}
+            />
+            <Route exact={true} path="/Calendar" render={() => <Calendar />} />
+            <Route
+              exact={true}
+              path="/AddUsersHockey"
+              render={() => <AddUsersHockey />}
+            />
+            <Route
+              exact={true}
+              path="/AddUsersFootball"
+              render={() => <AddUsersFootball />}
+            />
+            <Route
+              exact={true}
+              path="/AddUsersBaseball"
+              render={() => <AddUsersBaseball />}
+            />
           </BrowserRouter>
         </div>
       );
@@ -80,29 +120,39 @@ class App extends Component {
       return (
         <div className="login-page">
           <div className="form">
-            <form className={this.state.loginNOTsignup ? "login-form" : "register-form"}>
+            <form
+              className={
+                this.state.loginNOTsignup ? "login-form" : "register-form"
+              }
+            >
               <input
                 type="text"
                 onChange={this.usernameSet}
-                placeholder={this.state.loginNOTsignup ? "username" : "create username"}>
-              </input>
+                placeholder={
+                  this.state.loginNOTsignup ? "username" : "create username"
+                }
+              ></input>
               <input
                 type="password"
                 onChange={this.passwordSet}
-                placeholder={this.state.loginNOTsignup ? "password" : "create password"}>
-              </input>
+                placeholder={
+                  this.state.loginNOTsignup ? "password" : "create password"
+                }
+              ></input>
               <button onClick={this.formSubmitHandler}>
                 {this.state.loginNOTsignup ? "login" : "sign up"}
               </button>
               <p className="message" onClick={this.toggle_loginNOTsignup}>
-                {this.state.loginNOTsignup ? "don't yet an account?" : "already have an account?"}
+                {this.state.loginNOTsignup
+                  ? "don't yet an account?"
+                  : "already have an account?"}
               </p>
             </form>
           </div>
         </div>
       );
     }
-  }
+  };
 }
 
 const mapStateToProps = state => ({
