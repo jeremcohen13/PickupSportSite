@@ -5,12 +5,12 @@ let ObjectID = require("mongodb").ObjectID;
 let multer = require("multer");
 let upload = multer({ dest: __dirname + "/uploads" });
 let cookieParser = require("cookie-parser");
+// let sha1 = require("sha1");
 
 const config = require(__dirname + "/config.json");
 const profile = process.argv[2]? process.argv[2]: 'prod';
 
 app.use(cookieParser());
-// let sha1 = require("sha1");
 app.use("/", express.static("build/dist"));
 app.use("/", express.static("build"));
 app.use("/uploads", express.static("uploads"));

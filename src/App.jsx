@@ -19,7 +19,7 @@ class App extends Component {
     this.state = {
       username: "",
       password: "",
-      loginNOTsignup: false // default to sign up, not login
+      loginNOTsignup: true // default to login, not signup
     };
   }
 
