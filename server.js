@@ -62,34 +62,16 @@ app.post("/login", upload.none(), asyncHandler(async (req, res) => {
 }));
 
 app.post("/logout", upload.none(), asyncHandler(async (req, res) => {
-  res.send(JSON.stringify({ success: false }));
+  // TODO: ?
+  res.json({ success: false });
 }));
 
 app.post("/addevent", upload.none(), asyncHandler(async (req, res) => {
-  let eventName = req.body.title;
-  let eventLoc = req.body.location;
-  let eventDate = req.body.date;
-  let eventSport = req.body.sport;
-  let eventAmount = req.body.amount;
-  let EventID = generateId();
-  let newEvent = {
-    location: eventLoc,
-    title: eventName,
-    date: eventDate,
-    amount: eventAmount,
-    sport: eventSport,
-    ID: EventID,
-    user: username,
-    userId: req.cookies.sid
-  };
-  JSON.stringify(newEvent);
-  console.log("event added");
-  res.send({ newEvent: newEvent, success: true });
+  let newEvent = { username, location, title, sport, amount, date } = req.body;
+  // TODO: db calls
+  console.log(`event added: ${newEvent}`);
+  res.json({ newEvent, success: true });
 }));
-
-app.all("/*", (req, res, next) => {
-  res.sendFile(__dirname + "/build/index.html");
-});
 
 app.listen(config["profiles"][profile]["port"], "0.0.0.0", () => {
   console.log(`Server running on port ${config["profiles"][profile]["port"]}`);
