@@ -1,21 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
 
-class UnconnectedHeader extends Component {
-  handleLogout = async event => {
-    event.preventDefault();
-    console.log("LOGOUT form submitted");
-    let data = new FormData();
-    await fetch("/logout", {
-      method: "POST",
-      body: data,
-      credentials: "include"
-    });
-    return <Redirect to="/Login" />;
-  };
-
+class Header extends Component {
   render = () => {
     return (
       <div className="header">
@@ -49,5 +36,6 @@ class UnconnectedHeader extends Component {
     );
   };
 }
-let Header = connect()(UnconnectedHeader);
+
+Header = connect()(Header);
 export default Header;

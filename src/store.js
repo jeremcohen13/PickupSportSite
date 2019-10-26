@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 
 let reducer = (state, action) => {
-  if (action.type === "login-success") {
+  if (action.type === "LOGIN") {
     return { ...state, loggedIn: true, username: action.username };
   }
   if (action.type === "logout-success") {
