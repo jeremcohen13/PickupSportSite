@@ -1,34 +1,47 @@
 import { createStore } from "redux";
 
+const LOGIN           = "LOGIN";
+const LOGOUT          = "LOGOUT";
+const ADD_EVENT       = "ADD-EVENT";
+const ADD_PARTICIPANT = "ADD-PLAYER";
+const SELECT_LOCATION = "SELECT-LOCATION";
+const SELECT_AMOUNT   = "SELECT-AMOUNT";
+const SELECT_SPORT    = "SELECT-SPORT";
+const SELECT_DATE     = "SELECT-DATE";
+
 let reducer = (state, action) => {
-  if (action.type === "LOGIN") {
+  if (action.type === LOGIN) {
     return { ...state, loggedIn: true, username: action.username };
   }
-  if (action.type === "logout-success") {
+  else if (action.type === LOGOUT) {
     return { ...state, loggedIn: false };
   }
-  if (action.type === "add-event") {
+
+  else if (action.type === ADD_EVENT) {
     console.log(state);
-    return { ...state, events: state.events.concat(action.event) };
+    return { ...state, events: [...state.events, action.event] };
   }
-  if (action.type === "add-player") {
+  else if (action.type === ADD_PARTICIPANT) {
     console.log(state);
     return { ...state, player: state.p };
   }
-  if (action.type === "select-location") {
+
+  else if (action.type === SELECT_LOCATION) {
     return { ...state, location: action.value };
   }
-
-  if (action.type === "select-amount") {
+  else if (action.type === SELECT_AMOUNT) {
     return { ...state, amount: action.value };
   }
-  if (action.type === "select-sport") {
+  else if (action.type === SELECT_SPORT) {
     return { ...state, sport: action.value };
   }
-  if (action.type === "select-date") {
+  else if (action.type === SELECT_DATE) {
     return { ...state, date: action.value };
   }
-  return state;
+
+  else {
+    return state;
+  }
 };
 
 const store = createStore(
@@ -45,4 +58,10 @@ const store = createStore(
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+export {
+  LOGIN, LOGOUT,
+  ADD_EVENT, ADD_PARTICIPANT,
+  SELECT_LOCATION, SELECT_AMOUNT, SELECT_SPORT, SELECT_DATE
+};
 export default store;

@@ -1,7 +1,7 @@
 (async () => {
   const express = require("express");
   const MongoClient = require("mongodb").MongoClient;
-  const upload = require("multer")({ dest: __dirname + "/uploads" });
+  const upload = require("multer")({ dest: `${__dirname}/uploads` });
   const cookieParser = require("cookie-parser");
   const bodyParser = require("body-parser");
   const path = require("path");
@@ -40,6 +40,7 @@
   }));
 
   apiRouter.post("/login", upload.none(), asyncHandler(async (req, res) => {
+    console.log('loggin in!');
     const {username, password} = req.body;
 
     const query = {
@@ -72,6 +73,10 @@
 
   // the app
   const app = express();
+  app.use("/", (req, res, next) => {
+    console.log(req);
+    next()
+  })
   app.use("/api", apiRouter)
   app.use("/uploads", express.static("uploads"));
   app.use("/", express.static("build"));

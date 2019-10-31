@@ -1,7 +1,9 @@
 import React, { Component, Fragments } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { postData } from "./utils.js";
+import _ from "lodash";
+import { postData, loginApiUrl } from "./requestUtils.js";
+import { LOGIN } from "./store.js";
 
 class Login extends Component {
   constructor(props) {
@@ -19,16 +21,15 @@ class Login extends Component {
   formSubmitHandler = async evt => {
     evt.preventDefault();
 
-    const url = "/api/login";
     const data = {
       username: this.state.username,
       password: this.state.password,
     };
-    const response = await (await postData({url, data})).json();
+    const response = await (await postData({url: loginApiUrl, data})).json();
 
     if (response.success) {
       this.props.dispatch({
-        type: "LOGIN",
+        type: LOGIN,
         username: this.state.username
       });
       this.props.history.push("/");

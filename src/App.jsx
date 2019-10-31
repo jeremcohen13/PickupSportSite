@@ -1,6 +1,7 @@
-import React, { Component, Fragments } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 import Header from "./Header.jsx";
 import LoginOrSignup from "./LoginOrSignup.jsx"
@@ -14,6 +15,7 @@ import AddUsersHockey from "./AddUsersHockey.jsx";
 import GamesBody from "./GamesBody.jsx";
 import AddUsersFootball from "./AddUsersFootball.jsx";
 import AddUsersBaseball from "./AddUsersBaseball.jsx";
+import Homepage from "./Homepage.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -23,21 +25,22 @@ class App extends Component {
   render = () => {
     if (this.props.loggedIn) {
       return (
-        <div>
-          <BrowserRouter>
-            <Header username={this.props.username} />
-            <Route exact={true} path="/MontrealMaps"       render={() => <MontrealMaps/>}/>
-            <Route exact={true} path="/AddSport"           render={() => <AddSport />} />
-            <Route exact={true} path="/ratingsystem"       render={() => <RatingSystem />} />
-            <Route exact={true} path="/TorontoMaps"        render={() => <TorontoMaps />} />
-            <Route exact={true} path="/AddUsersBasketball" render={() => <AddUsersBasketball />} />
-            <Route exact={true} path="/GamesBody"          render={() => <GamesBody />} />
-            <Route exact={true} path="/Calendar"           render={() => <Calendar />} />
-            <Route exact={true} path="/AddUsersHockey"     render={() => <AddUsersHockey />} />
-            <Route exact={true} path="/AddUsersFootball"   render={() => <AddUsersFootball />} />
-            <Route exact={true} path="/AddUsersBaseball"   render={() => <AddUsersBaseball />} />
-          </BrowserRouter>
-        </div>
+        <Fragment>
+          <Header username={this.props.username} />
+          <Switch>
+            <Route exact path="/"                   render={() => <Homepage/>}/>
+            <Route exact path="/MontrealMaps"       render={() => <MontrealMaps/>}/>
+            <Route exact path="/AddSport"           render={() => <AddSport/>}/>
+            <Route exact path="/ratingsystem"       render={() => <RatingSystem/>}/>
+            <Route exact path="/TorontoMaps"        render={() => <TorontoMaps/>}/>
+            <Route exact path="/AddUsersBasketball" render={() => <AddUsersBasketball/>}/>
+            <Route exact path="/GamesBody"          render={() => <GamesBody/>}/>
+            <Route exact path="/Calendar"           render={() => <Calendar/>}/>
+            <Route exact path="/AddUsersHockey"     render={() => <AddUsersHockey/>}/>
+            <Route exact path="/AddUsersFootball"   render={() => <AddUsersFootball/>}/>
+            <Route exact path="/AddUsersBaseball"   render={() => <AddUsersBaseball/>}/>
+          </Switch>
+        </Fragment>
       );
     } else {
       return <LoginOrSignup isLoginNotSignup={true}/>
@@ -45,9 +48,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  username: state.username,
-  loggedIn: state.loggedIn,
-})
+const mapStateToProps = state => _.pick(state, ["username", "loggedIn"]);
 App = connect(mapStateToProps)(App)
 export default App;

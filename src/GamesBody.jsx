@@ -1,8 +1,15 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import _ from "lodash";
+
 import { initialData } from "./Data.js";
-class UnconnectedGamesBody extends Component {
+
+class GamesBody extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render = () => {
     let sportsPaths = {
       basketball: "AddUsersBasketball",
@@ -45,15 +52,9 @@ class UnconnectedGamesBody extends Component {
     );
   };
 }
-let mapStateToProps = state => {
-  console.log(state);
-  return {
-    location: state.location,
-    title: state.title,
-    date: state.date,
-    amount: state.amount,
-    events: state.events
-  };
-};
-let GamesBody = connect(mapStateToProps)(UnconnectedGamesBody);
+
+let mapStateToProps = state => _.pick(state, [
+  "location", "title", "date", "amount", "events"
+]);
+GamesBody = connect(mapStateToProps)(GamesBody);
 export default GamesBody;
