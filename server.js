@@ -6,6 +6,7 @@
   const bodyParser = require("body-parser");
   const path = require("path");
   const sha1 = require("sha1");
+  const _ = require("lodash");
 
   const config = require(__dirname + "/config.json");
   const profileName = process.argv[2]? process.argv[2]: 'prod';
@@ -23,7 +24,6 @@
   apiRouter.use(bodyParser.json());
 
   apiRouter.post("/signup", upload.none(), asyncHandler(async (req, res) => {
-    console.log("signup", req.body);
     const { username, password } = req.body;
 
     if (username && password) {
@@ -40,7 +40,6 @@
   }));
 
   apiRouter.post("/login", upload.none(), asyncHandler(async (req, res) => {
-    console.log('loggin in!');
     const {username, password} = req.body;
 
     const query = {
@@ -65,18 +64,33 @@
   }));
 
   apiRouter.post("/addevent", upload.none(), asyncHandler(async (req, res) => {
-    let newEvent = { username, location, title, sport, amount, date } = req.body;
-    // TODO: db calls
-    console.log(`event added: ${JSON.stringify(newEvent)}`);
-    res.json({ newEvent, success: true });
+    const { username, location, name, sport, numPlayers, date } = req.body;
+    const newEvent = { username, location, name, sport, numPlayers, date };
+    console.log(newEvent);
+
+    // validate input
+    if (_.some([username, location, name, sport, date], s => !s || typeof(s)!=="string")) {
+      res.json({ success: false, message: "[username, location, name, sport, date] must be nonemtpy strings" });
+      return;
+    }
+    if (!numPlayers || typeof(numPlayers)!=="number" || numPlayers<1 || numPlayers>30 || numPlayers%1!==0) {
+      res.json({ success: false, message: "numPlayers must be integer in range 1 to 30 (inclusive)" });
+      return;
+    }
+    // TODO: moment.js to validate date?
+
+    try {
+      db.collections("events").insertOne(newEvent);
+      console.log(`event added: ${JSON.stringify(newEvent)}`);
+      res.json({ newEvent, success: true });
+    } catch (e) {
+      console.log('db fail');
+      res.json({ success: false, message: "failed to create new event, (name, date, location) not unique" })
+    }
   }));
 
   // the app
   const app = express();
-  app.use("/", (req, res, next) => {
-    console.log(req);
-    next()
-  })
   app.use("/api", apiRouter)
   app.use("/uploads", express.static("uploads"));
   app.use("/", express.static("build"));
