@@ -64,7 +64,7 @@
   }));
 
   apiRouter.post("/addevent", upload.none(), asyncHandler(async (req, res) => {
-    const { username, location, name, sport, numPlayers, date } = req.body;
+    let { username, location, name, sport, numPlayers, date } = req.body;
     const newEvent = { username, location, name, sport, numPlayers, date };
     console.log(newEvent);
 
@@ -73,6 +73,7 @@
       res.json({ success: false, message: "[username, location, name, sport, date] must be nonemtpy strings" });
       return;
     }
+    numPlayers = Number(numPlayers);
     if (!numPlayers || typeof(numPlayers)!=="number" || numPlayers<1 || numPlayers>30 || numPlayers%1!==0) {
       res.json({ success: false, message: "numPlayers must be integer in range 1 to 30 (inclusive)" });
       return;
@@ -80,14 +81,28 @@
     // TODO: moment.js to validate date?
 
     try {
-      db.collections("events").insertOne(newEvent);
-      console.log(`event added: ${JSON.stringify(newEvent)}`);
+      db.collection("events").insertOne(newEvent);
       res.json({ newEvent, success: true });
     } catch (e) {
-      console.log('db fail');
       res.json({ success: false, message: "failed to create new event, (name, date, location) not unique" })
     }
   }));
+
+  apiRouter.post("/getevent", asyncHandler(async (req, res) => {
+    const {sportEventId: _id} = req.body;
+    const event = db.collection("events").findOne({'_id': {$eq: _id}});
+    if (event) {
+      res.json({ success: true, sportEvent: event });
+    } else {
+      res.json({  success: false, message: "could not find event with that id" });
+    }
+  }));
+
+  apiRouter.post("/getevents", asyncHandler(async(req, res) => {
+    res.json(await (await db.collection("events").find({})).toArray());
+  }));
+
+
 
   // the app
   const app = express();
