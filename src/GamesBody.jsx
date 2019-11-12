@@ -3,8 +3,6 @@ import { Redirect } from "react-router-dom";
 import _ from "lodash";
 import { postData, geteventsApiUrl } from "./requestUtils.js";
 
-import { initialData } from "./Data.js";
-
 class GamesBody extends Component {
   constructor(props) {
     super(props);
@@ -12,20 +10,13 @@ class GamesBody extends Component {
     this.state = {
       eventsLoaded: false,
       sportEvents: [],
-      redirect: false,
+      chosenEventId: undefined,
     }
   }
 
   render = () => {
-    if (this.state.redirect) {
-      return (
-        <Redirect
-          to={{
-            pathname: `/SportEvent/${this.state.redirect.sportEvent._id}`,
-            sportEvent: this.state.redirect.sportEvent
-          }}
-        />
-      )
+    if (this.state.chosenEventId) {
+      return <Redirect to={`/SportEvent/${this.state.chosenEventId}`}/>
     }
 
     (async () => {
@@ -40,7 +31,7 @@ class GamesBody extends Component {
         <div>
           <h1 alight="centre">All Sport Events</h1>
           {this.state.sportEvents.map((sportEvent, i) => (
-            <div key={i} className="card" onClick={() => this.setState({ redirect: {sportEvent} })}>
+            <div key={i} className="card" onClick={() => this.setState({ chosenEventId: sportEvent._id })}>
               <div> <h1 style={{margin: "3px"}}>{sportEvent.name}</h1> </div>
               <div> <h2>created by {sportEvent.username}</h2> </div>
               <div> <h2>{sportEvent.location}</h2> </div>
@@ -55,4 +46,5 @@ class GamesBody extends Component {
     );
   };
 }
+
 export default GamesBody;

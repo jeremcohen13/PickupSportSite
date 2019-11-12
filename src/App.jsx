@@ -20,14 +20,14 @@ let App = (props) => {
       <Fragment>
         <Header username={props.username} />
         <Switch>
-          <Route exact path="/"                   component={Homepage}/>
-          <Route exact path="/AddSport"           component={AddSport}/>
-          <Route exact path="/GamesBody"          component={GamesBody}/>
-          <Route exact path="/SportEvent/:id"     component={SportEvent}/>
-          <Route exact path="/AddUsersBasketball" component={AddUsersBasketball}/>
-          <Route exact path="/AddUsersHockey"     component={AddUsersHockey}/>
-          <Route exact path="/AddUsersFootball"   component={AddUsersFootball}/>
-          <Route exact path="/AddUsersBaseball"   component={AddUsersBaseball}/>
+          <Route exact path="/"                         component={Homepage}/>
+          <Route exact path="/AddSport"                 component={AddSport}/>
+          <Route exact path="/GamesBody"                component={GamesBody}/>
+          <Route exact path="/SportEvent/:sportEventId" component={SportEvent}/>
+          <Route exact path="/AddUsersBasketball"       component={AddUsersBasketball}/>
+          <Route exact path="/AddUsersHockey"           component={AddUsersHockey}/>
+          <Route exact path="/AddUsersFootball"         component={AddUsersFootball}/>
+          <Route exact path="/AddUsersBaseball"         component={AddUsersBaseball}/>
         </Switch>
       </Fragment>
     );

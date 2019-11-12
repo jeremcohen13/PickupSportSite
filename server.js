@@ -1,6 +1,6 @@
 (async () => {
   const express = require("express");
-  const MongoClient = require("mongodb").MongoClient;
+  const { MongoClient, ObjectId } = require("mongodb");
   const upload = require("multer")({ dest: `${__dirname}/uploads` });
   const cookieParser = require("cookie-parser");
   const bodyParser = require("body-parser");
@@ -90,11 +90,12 @@
 
   apiRouter.post("/getevent", asyncHandler(async (req, res) => {
     const {sportEventId: _id} = req.body;
-    const event = db.collection("events").findOne({'_id': {$eq: _id}});
-    if (event) {
-      res.json({ success: true, sportEvent: event });
+    const sportEvent = await db.collection("events").findOne({_id: ObjectId(_id)});
+    if (sportEvent) {
+      res.json({ success: true, sportEvent });
+      console.log(sportEvent);
     } else {
-      res.json({  success: false, message: "could not find event with that id" });
+      res.json({ success: false, message: "could not find sport event with that id" });
     }
   }));
 
