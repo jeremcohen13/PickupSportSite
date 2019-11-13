@@ -59,7 +59,7 @@
   }));
 
   apiRouter.post("/logout", upload.none(), asyncHandler(async (req, res) => {
-    // TODO: ?
+    // TODO: logout
     res.json({ success: false });
   }));
 

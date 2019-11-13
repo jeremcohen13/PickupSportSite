@@ -31,7 +31,7 @@ class SportEvent extends Component {
   }
 
   joinHandler = () => {
-    // try and join. if succeeds, refresh, else, alert
+    // TODO: try and join. if succeeds, refresh, else, alert
   }
 
   render = () => {
@@ -58,7 +58,7 @@ class SportEvent extends Component {
             {participations.map(({userId, eventId}, i) => (
               <div key={i} className="card-players">
                 <h4>{`userId: ${userId}`}</h4>
-                {/* TODO: button to show user all userinfo? */}
+                {/* TODO: show all user info, not just userId */}
               </div>
             ))}
           </div>
