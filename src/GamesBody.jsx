@@ -21,7 +21,7 @@ class GamesBody extends Component {
 
     (async () => {
       if (!this.state.eventsLoaded) {
-        const sportEvents = await (await postData({ url: geteventsApiUrl })).json();
+        const sportEvents = await postData({ url: geteventsApiUrl });
         this.setState({ sportEvents, eventsLoaded: !this.state.eventsLoaded });
       }
     })();

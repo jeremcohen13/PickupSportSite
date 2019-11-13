@@ -93,7 +93,6 @@
     const sportEvent = await db.collection("events").findOne({_id: ObjectId(_id)});
     if (sportEvent) {
       res.json({ success: true, sportEvent });
-      console.log(sportEvent);
     } else {
       res.json({ success: false, message: "could not find sport event with that id" });
     }
@@ -103,7 +102,11 @@
     res.json(await (await db.collection("events").find({})).toArray());
   }));
 
-
+  apiRouter.post("/getparticipants", asyncHandler(async(req, res) => {
+    const query = { eventId: ObjectId(req.body.sportEventId) };
+    const participations = await (await db.collection("participations").find(query)).toArray();
+    res.json({ participations });
+  }));
 
   // the app
   const app = express();

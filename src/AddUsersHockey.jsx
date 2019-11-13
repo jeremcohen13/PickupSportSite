@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { EventEmitter } from "events";
-import { throws } from "assert";
+import _ from "lodash";
+
 import "./AddUsersHockey.css";
 
-class UnconnectedAddUsersHockey extends Component {
+class AddUsersHockey extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +25,7 @@ class UnconnectedAddUsersHockey extends Component {
       }
     };
   }
+
   handleAddPlayer = position => {
     return event => {
       event.preventDefault();
@@ -49,8 +50,7 @@ class UnconnectedAddUsersHockey extends Component {
     return (
       <div>
         <div className="hockey-container">
-          {Object.keys(this.state.event.positions).map(position => {
-            let player = this.state.event.positions[position];
+          {_toPairs(this.state.event.positions).map(([position, player]) => {
             return (
               <div>
                 <button
@@ -70,15 +70,7 @@ class UnconnectedAddUsersHockey extends Component {
     );
   };
 }
-let mapStateToProps = state => {
-  console.log(state);
-  return {
-    username: state.username,
-    player: state.username,
-    addplayer: state.addplayer
-  };
-};
 
-let AddUsersHockey = connect(mapStateToProps)(UnconnectedAddUsersHockey);
-
+const mapStateToProps = state => _.pick(state, ["username", "addplayer"])
+AddUsersHockey = connect(mapStateToProps)(AddUsersHockey);
 export default AddUsersHockey;

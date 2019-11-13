@@ -25,7 +25,7 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password,
     };
-    const response = await (await postData({url: loginApiUrl, data})).json();
+    const response = await postData({url: loginApiUrl, data});
 
     if (response.success) {
       this.props.dispatch({

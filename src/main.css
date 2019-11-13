@@ -242,34 +242,34 @@ ul {
   opacity: 0.6px;
   box-shadow: 10px 10px 5px 5px grey;
 }
-/* .hockey-
-.hockey1 {
-  position: relative;
-  top: 270px;
-  left: 420px;
+.card-special {
+  display: block;
+  margin: 3%;
+  padding: 20px;
+  width: 34%;
+  font-size: 14pt;
+  font-family: "Dosis", sans-serif;
+  text-align: left;
+  border-radius: 6px;
+  left: 20px;
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #F3FDFD;
 }
-.hockey2 {
+.card-players {
+  display: inline-block;
   position: relative;
-  top: 213px;
-  left: 350px;
+  height: 275;
+  font-size: 14pt;
+  font-family: "Dosis", sans-serif;
+  text-align: left;
+  border-radius: 6px;
+  left: 20px;
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #FFFFFF;
 }
-.hockey3 {
-  position: relative;
-  top: 160px;
-  left: 280.5px;
+#joinbutton {
+  margin-left: 20px;
+  padding: 5px;
 }
-.hockey4 {
-  position: relative;
-  top: 110px;
-  left: 55px;
-}
-.hockey5 {
-  position: relative;
-  top: 320px;
-  left: -15px;
-}
-.hockey6 {
-  position: relative;
-  top: 224px;
-  left: -280px;
-} */

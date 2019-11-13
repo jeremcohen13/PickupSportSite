@@ -38,7 +38,7 @@ class AddSport extends Component {
       ...(_.pick(this.state, ["name", "sport", "location", "date", "numPlayers"]))
     };
 
-    let response = await (await postData({url: addeventApiUrl, data: newEventData})).json();
+    let response = await postData({url: addeventApiUrl, data: newEventData});
     if (response.success) {
       this.props.dispatch({
         type: ADD_EVENT,

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import { postData } from "./requestUtils.js"
 import Login from "./Login.jsx"
 import Signup from "./Signup.jsx"
 

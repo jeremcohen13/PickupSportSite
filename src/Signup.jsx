@@ -24,7 +24,7 @@ class Signup extends Component {
       username: this.state.username,
       password: this.state.password,
     };
-    const response = await (await postData({url: signupApiUrl, data})).json();
+    const response = await postData({url: signupApiUrl, data});
 
     if (response.success) {
       this.props.dispatch({
