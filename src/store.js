@@ -11,7 +11,7 @@ const SELECT_DATE     = "SELECT-DATE";
 
 let reducer = (state, action) => {
   if (action.type === LOGIN) {
-    return { ...state, loggedIn: true, username: action.username };
+    return { ...state, loggedIn: true, username: action.username, userId: action.userId };
   }
   else if (action.type === LOGOUT) {
     return { ...state, loggedIn: false };
@@ -49,6 +49,7 @@ const store = createStore(
   {
     loggedIn: false,
     username: "",
+    userId: undefined,
     location: [],
     date: [],
     amount: [],

@@ -1,17 +1,34 @@
 import React, { Component, Fragment } from "react";
 import { withRouter, useLocation, useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import _ from "lodash";
 
-import { postData, geteventApiUrl, getparticipantsApiUrl } from "./requestUtils.js"
+import {
+  postData,
+  geteventApiUrl, getparticipantsApiUrl, getusernamesApiUrl,
+  joineventApiUrl, leaveeventApiUrl,
+} from "./requestUtils.js"
 
 class SportEvent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      sportEventId:   props.match.params.sportEventId,
-      sportEvent:     undefined,
-      participations: undefined,
-    }
+    this.defaultState = {
+      userId:           props.userId,
+      sportEventId:     props.match.params.sportEventId,
+      sportEvent:       undefined,
+      participations:   undefined,
+      participantsById: undefined,
+    };
+
+    this.state = { ...this.defaultState };
+  }
+
+  asyncLoadUserNames = async participantIds => {
+    const usernamesByIdResponse = await postData({
+      url: getusernamesApiUrl, data: { userIds: participantIds }
+    });
+    this.setState({ participantsById: usernamesByIdResponse.usernamesById })
   }
 
   asyncLoadSportEventAndParticipations = async sportEventId => {
@@ -25,13 +42,30 @@ class SportEvent extends Component {
         sportEvent:     sportEventResponse.sportEvent,
         participations: participationsResponse.participations,
       });
+      this.asyncLoadUserNames(_.map(participationsResponse.participations, p => p.userId));
     } else if (!sportEventResponse.sucess) {
       alert(sportEventResponse.message);
     }
   }
 
-  joinHandler = () => {
-    // TODO: try and join. if succeeds, refresh, else, alert
+  joinHandler = async () => {
+    const data = { eventId: this.state.sportEventId, userId: this.state.userId };
+    const joinResponse = await postData({ url: joineventApiUrl, data });
+    if (joinResponse.success) {
+      this.setState({ ...this.defaultState });
+    } else {
+      alert(joinResponse.message);
+    }
+  }
+
+  leaveHandler = async () => {
+    const data = { eventId: this.state.sportEventId, userId: this.state.userId };
+    const leaveResponse = await postData({ url: leaveeventApiUrl, data });
+    if (leaveResponse.success) {
+      this.setState({ ...this.defaultState });
+    } else {
+      alert(leaveResponse.message);
+    }
   }
 
   render = () => {
@@ -51,14 +85,20 @@ class SportEvent extends Component {
           </div>
           <div className="card-special">
             <h2 style={{display: "inline"}}>Join this game?</h2>
-            <input type="button" value="JOIN" id="joinbutton" onClick={this.joinHandler}/>
+            {_.keyBy(this.state.participations, "userId")[this.state.userId] ?
+              <input type="button" value="LEAVE" id="leavebutton" onClick={this.leaveHandler}/> :
+              <input type="button" value="JOIN" id="joinbutton" onClick={this.joinHandler}/>
+            }
           </div>
           <div className="card-special">
             <p>Players:</p>
             {participations.map(({userId, eventId}, i) => (
               <div key={i} className="card-players">
-                <h4>{`userId: ${userId}`}</h4>
-                {/* TODO: show all user info, not just userId */}
+                {this.state.participantsById ?
+                  <h4>{this.state.participantsById[userId]}</h4> :
+                  <p>Loading user info</p>
+                }
+                <h6>{`userId: ${userId}`}</h6>
               </div>
             ))}
           </div>
@@ -66,7 +106,7 @@ class SportEvent extends Component {
       )
     } else {
       this.asyncLoadSportEventAndParticipations(sportEventId);
-      
+
       return (
         <div>
           <p>loading event information</p>
@@ -76,5 +116,7 @@ class SportEvent extends Component {
   }
 }
 
+const mapStateToProps = state => _.pick(state, ["userId"]);
+SportEvent = connect(mapStateToProps)(SportEvent);
 SportEvent = withRouter(SportEvent);
 export default SportEvent;

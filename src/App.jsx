@@ -9,10 +9,6 @@ import LoginOrSignup from "./LoginOrSignup.jsx"
 import AddSport from "./AddSport.jsx";
 import GamesBody from "./GamesBody.jsx";
 import SportEvent from "./SportEvent.jsx";
-import AddUsersBasketball from "./AddUsersBasketball.jsx";
-import AddUsersHockey from "./AddUsersHockey.jsx";
-import AddUsersFootball from "./AddUsersFootball.jsx";
-import AddUsersBaseball from "./AddUsersBaseball.jsx";
 
 let App = (props) => {
   if (props.loggedIn) {
@@ -24,10 +20,6 @@ let App = (props) => {
           <Route exact path="/AddSport"                 component={AddSport}/>
           <Route exact path="/GamesBody"                component={GamesBody}/>
           <Route exact path="/SportEvent/:sportEventId" component={SportEvent}/>
-          <Route exact path="/AddUsersBasketball"       component={AddUsersBasketball}/>
-          <Route exact path="/AddUsersHockey"           component={AddUsersHockey}/>
-          <Route exact path="/AddUsersFootball"         component={AddUsersFootball}/>
-          <Route exact path="/AddUsersBaseball"         component={AddUsersBaseball}/>
         </Switch>
       </Fragment>
     );

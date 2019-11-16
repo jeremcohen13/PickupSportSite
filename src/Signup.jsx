@@ -29,7 +29,8 @@ class Signup extends Component {
     if (response.success) {
       this.props.dispatch({
         type: LOGIN,
-        username: this.state.username
+        username: this.state.username,
+        userId: response.userId
       });
       this.props.history.push("/");
     } else {

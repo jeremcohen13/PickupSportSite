@@ -14,6 +14,12 @@ class GamesBody extends Component {
     }
   }
 
+  onCardClick = async (chosenEventId) => {
+    if (getSelection().toString().length === 0) { // user not just selecting text
+      this.setState({ chosenEventId });
+    }
+  }
+
   render = () => {
     if (this.state.chosenEventId) {
       return <Redirect to={`/SportEvent/${this.state.chosenEventId}`}/>
@@ -31,7 +37,7 @@ class GamesBody extends Component {
         <div>
           <h1 alight="centre">All Sport Events</h1>
           {this.state.sportEvents.map((sportEvent, i) => (
-            <div key={i} className="card" onClick={() => this.setState({ chosenEventId: sportEvent._id })}>
+            <div key={i} className="card" onClick={() => this.onCardClick(sportEvent._id)}>
               <div> <h1 style={{margin: "3px"}}>{sportEvent.name}</h1> </div>
               <div> <h2>created by {sportEvent.username}</h2> </div>
               <div> <h2>{sportEvent.location}</h2> </div>

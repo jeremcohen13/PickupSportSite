@@ -6,7 +6,10 @@ const postData = async ({url, data}) => {
   })).json();
 }
 
-const getparticipantsApiUrl = "/api/getparticipants"
+const leaveeventApiUrl      = "/api/leaveevent";
+const joineventApiUrl       = "/api/joinevent";
+const getusernamesApiUrl    = "/api/getusernames";
+const getparticipantsApiUrl = "/api/getparticipants";
 const geteventApiUrl        = "/api/getevent";
 const geteventsApiUrl       = "/api/getevents";
 const loginApiUrl           = "/api/login";
@@ -16,6 +19,7 @@ const addeventApiUrl        = "/api/addevent";
 
 export {
   postData,
-  geteventApiUrl, geteventsApiUrl, getparticipantsApiUrl,
-  loginApiUrl, signupApiUrl, logoutApiUrl, addeventApiUrl,
+  geteventApiUrl, geteventsApiUrl, getparticipantsApiUrl, getusernamesApiUrl,
+  loginApiUrl, signupApiUrl, logoutApiUrl,
+  addeventApiUrl, joineventApiUrl, leaveeventApiUrl,
 };

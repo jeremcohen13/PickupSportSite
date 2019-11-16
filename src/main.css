@@ -259,17 +259,22 @@ ul {
 .card-players {
   display: inline-block;
   position: relative;
-  height: 275;
   font-size: 14pt;
   font-family: "Dosis", sans-serif;
   text-align: left;
-  border-radius: 6px;
+  border: 1px solid black;
+  border-radius: 4px;
   left: 20px;
-  box-sizing: border-box;
   padding: 30px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   background-color: #FFFFFF;
 }
 #joinbutton {
+  margin-left: 20px;
+  padding: 5px;
+}
+#leavebutton {
   margin-left: 20px;
   padding: 5px;
 }
