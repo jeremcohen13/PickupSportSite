@@ -1,8 +1,0 @@
-.hockey-container {
-  display: grid;
-  grid-template-columns: 300px 300px;
-  grid-column-gap: 20px;
-  position: relative;
-  top: 250px;
-  left: 260px;
-}

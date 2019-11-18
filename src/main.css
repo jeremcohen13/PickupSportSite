@@ -127,8 +127,8 @@ body {
   margin-left: 15px;
 }
 .map {
-  height: 400px;
-  width: 100%;
+  padding-right: 10px;
+  float: right;
 }
 * {
   margin: 0;
@@ -236,39 +236,45 @@ ul {
   left: 20px;
   box-sizing: border-box;
   padding: 30px;
+  background-color: #F3FDFD;
 }
 .card:hover {
   opacity: 0.6px;
   box-shadow: 10px 10px 5px 5px grey;
 }
-/* .hockey-
-.hockey1 {
-  position: relative;
-  top: 270px;
-  left: 420px;
+.card-special {
+  display: block;
+  margin: 3%;
+  padding: 20px;
+  width: 34%;
+  font-size: 14pt;
+  font-family: "Dosis", sans-serif;
+  text-align: left;
+  border-radius: 6px;
+  left: 20px;
+  box-sizing: border-box;
+  padding: 30px;
+  background-color: #F3FDFD;
 }
-.hockey2 {
+.card-players {
+  display: inline-block;
   position: relative;
-  top: 213px;
-  left: 350px;
+  font-size: 14pt;
+  font-family: "Dosis", sans-serif;
+  text-align: left;
+  border: 1px solid black;
+  border-radius: 4px;
+  left: 20px;
+  padding: 30px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background-color: #FFFFFF;
 }
-.hockey3 {
-  position: relative;
-  top: 160px;
-  left: 280.5px;
+#joinbutton {
+  margin-left: 20px;
+  padding: 5px;
 }
-.hockey4 {
-  position: relative;
-  top: 110px;
-  left: 55px;
+#leavebutton {
+  margin-left: 20px;
+  padding: 5px;
 }
-.hockey5 {
-  position: relative;
-  top: 320px;
-  left: -15px;
-}
-.hockey6 {
-  position: relative;
-  top: 224px;
-  left: -280px;
-} */

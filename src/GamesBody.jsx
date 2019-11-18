@@ -1,60 +1,56 @@
-import { connect } from "react-redux";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import _ from "lodash";
-
-import { initialData } from "./Data.js";
+import { postData, geteventsApiUrl } from "./requestUtils.js";
 
 class GamesBody extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      eventsLoaded: false,
+      sportEvents: [],
+      chosenEventId: undefined,
+    }
+  }
+
+  onCardClick = async (chosenEventId) => {
+    if (getSelection().toString().length === 0) { // user not just selecting text
+      this.setState({ chosenEventId });
+    }
   }
 
   render = () => {
-    let sportsPaths = {
-      basketball: "AddUsersBasketball",
-      hockey: "AddUsersHockey",
-      football: "AddUsersFootball",
-      tennis: "AddUsersTennis"
-    };
-    console.log(this.props.events);
+    if (this.state.chosenEventId) {
+      return <Redirect to={`/SportEvent/${this.state.chosenEventId}`}/>
+    }
+
+    (async () => {
+      if (!this.state.eventsLoaded) {
+        const sportEvents = await postData({ url: geteventsApiUrl });
+        this.setState({ sportEvents, eventsLoaded: !this.state.eventsLoaded });
+      }
+    })();
 
     return (
       <div className="frontpage">
         <div>
-          <h1 alight="centre">Pick a Game!</h1>
-          {this.props.events.map(event => {
-            let sportPath = sportsPaths[event.sport];
-            return (
-              <Link to={`/${sportPath}`}>
-                <div className="card">
-                  <div>
-                    <h1>{event.title}</h1>
-                  </div>
-                  <div>
-                    <h2>{event.location}</h2>
-                  </div>
-                  <div>
-                    <h3>{event.date}</h3>
-                  </div>
-                  <div>
-                    <h4>{event.sport}</h4>
-                  </div>
-                  <div>
-                    <h4>{event.amount} people</h4>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+          <h1 alight="centre">All Sport Events</h1>
+          {this.state.sportEvents.map((sportEvent, i) => (
+            <div key={i} className="card" onClick={() => this.onCardClick(sportEvent._id)}>
+              <div> <h1 style={{margin: "3px"}}>{sportEvent.name}</h1> </div>
+              <div> <h2>created by {sportEvent.username}</h2> </div>
+              <div> <h2>{sportEvent.location}</h2> </div>
+              <div> <h3>{sportEvent.date}</h3> </div>
+              <div> <h4>{sportEvent.sport}</h4> </div>
+              <div> <h4>{sportEvent.numPlayers} players</h4> </div>
+              <div> <h6>id: {sportEvent._id}</h6> </div>
+            </div>
+          ))}
         </div>
       </div>
     );
   };
 }
 
-let mapStateToProps = state => _.pick(state, [
-  "location", "title", "date", "amount", "events"
-]);
-GamesBody = connect(mapStateToProps)(GamesBody);
 export default GamesBody;
