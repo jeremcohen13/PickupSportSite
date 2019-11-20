@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { withRouter, useLocation, useParams } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
 
@@ -92,7 +92,7 @@ class SportEvent extends Component {
           </div>
           <div className="card-special">
             <p>Players:</p>
-            {participations.map(({userId, eventId}, i) => (
+            {participations.map(({ userId },  i) => (
               <div key={i} className="card-players">
                 {this.state.participantsById ?
                   <h4>{this.state.participantsById[userId]}</h4> :
