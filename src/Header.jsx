@@ -19,8 +19,7 @@ let Header = () => {
           </li>
           <li>
             <Link className="a" to="/AddSport">
-              {" "}
-              Add Sport{" "}
+              Add Sport
             </Link>
           </li>
         </ul>

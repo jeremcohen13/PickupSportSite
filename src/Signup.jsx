@@ -27,12 +27,12 @@ class Signup extends Component {
     const response = await postData({url: signupApiUrl, data});
 
     if (response.success) {
+      this.props.history.push("/");
       this.props.dispatch({
         type: LOGIN,
         username: this.state.username,
         userId: response.userId
       });
-      this.props.history.push("/");
     } else {
       alert(response.message);
     }

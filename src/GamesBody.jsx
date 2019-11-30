@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import _ from "lodash";
 import { postData, geteventsApiUrl } from "./requestUtils.js";
 
@@ -10,21 +10,16 @@ class GamesBody extends Component {
     this.state = {
       eventsLoaded: false,
       sportEvents: [],
-      chosenEventId: undefined,
     }
   }
 
   onCardClick = async (chosenEventId) => {
     if (getSelection().toString().length === 0) { // user not just selecting text
-      this.setState({ chosenEventId });
+        this.props.history.push(`/SportEvent/${chosenEventId}`)
     }
   }
 
   render = () => {
-    if (this.state.chosenEventId) {
-      return <Redirect to={`/SportEvent/${this.state.chosenEventId}`}/>
-    }
-
     (async () => {
       if (!this.state.eventsLoaded) {
         const sportEvents = await postData({ url: geteventsApiUrl });
@@ -53,4 +48,5 @@ class GamesBody extends Component {
   };
 }
 
+GamesBody = withRouter(GamesBody)
 export default GamesBody;

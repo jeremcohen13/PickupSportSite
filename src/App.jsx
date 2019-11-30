@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
 
