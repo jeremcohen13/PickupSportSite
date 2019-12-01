@@ -59,7 +59,6 @@ class Signup extends Component {
   }
 }
 
-const mapPropsToState = ({ loggedIn }) => ({ loggedIn });
-Signup = connect(mapPropsToState)(Signup);
+Signup = connect()(Signup);
 Signup = withRouter(Signup);
 export default Signup;
