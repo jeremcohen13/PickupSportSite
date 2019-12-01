@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Route, Redirect } from "react-router-dom";
 import Login from "./Login.jsx"
 import Signup from "./Signup.jsx"
 
@@ -10,11 +10,11 @@ class LoginOrSignup extends Component {
 
   render = () => {
     return (
-      <BrowserRouter>
+      <Fragment>
         <Route exact path="/login"  render={() => <Login/>}/>
         <Route exact path="/signup" render={() => <Signup/>}/>
         <Route       path="/"       render={() => <Redirect to="/login"/>}/>
-      </BrowserRouter>
+      </Fragment>
     )
   }
 }
