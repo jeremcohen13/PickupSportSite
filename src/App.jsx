@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
 
@@ -20,6 +20,7 @@ let App = (props) => {
           <Route exact path="/AddSport"                 component={AddSport}/>
           <Route exact path="/GamesBody"                component={GamesBody}/>
           <Route exact path="/SportEvent/:sportEventId" component={SportEvent}/>
+          <Route                                        render={() => <Redirect to="/"/>}/>
         </Switch>
       </Fragment>
     );
