@@ -11,21 +11,25 @@ class Login extends Component {
 
     this.state = {
       username: "",
-      password: "",
+      password: ""
     };
   }
 
-  onUsernameChange = evt => { this.setState({ username: evt.target.value }) };
-  onPasswordChange = evt => { this.setState({ password: evt.target.value }) };
+  onUsernameChange = evt => {
+    this.setState({ username: evt.target.value });
+  };
+  onPasswordChange = evt => {
+    this.setState({ password: evt.target.value });
+  };
 
   formSubmitHandler = async evt => {
     evt.preventDefault();
 
     const data = {
       username: this.state.username,
-      password: this.state.password,
+      password: this.state.password
     };
-    const response = await postData({url: loginApiUrl, data});
+    const response = await postData({ url: loginApiUrl, data });
 
     if (response.success) {
       this.props.dispatch({
@@ -41,23 +45,33 @@ class Login extends Component {
 
   toSignup = evt => {
     evt.preventDefault();
-    this.props.history.push("/signup")
+    this.props.history.push("/signup");
   };
 
   render = () => {
     return (
-      <div className="login-page">
-        <div className="form">
-          <form className="login-form">
-            <input type="text"     onChange={this.onUsernameChange} placeholder="username"></input>
-            <input type="password" onChange={this.onPasswordChange} placeholder="password"></input>
+      <div className="container">
+        <div className="row">
+          <form className="col form-signin">
+            <input
+              type="text"
+              onChange={this.onUsernameChange}
+              placeholder="username"
+            ></input>
+            <input
+              type="password"
+              onChange={this.onPasswordChange}
+              placeholder="password"
+            ></input>
             <button onClick={this.formSubmitHandler}>{"login"}</button>
-            <p className="message" onClick={this.toSignup}>{"Don't have an account? Sign up"}</p>
+            <p className="message" onClick={this.toSignup}>
+              {"Don't have an account? Sign up"}
+            </p>
           </form>
         </div>
       </div>
-    )
-  }
+    );
+  };
 }
 
 Login = connect()(Login);
