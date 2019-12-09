@@ -50,9 +50,9 @@ class Login extends Component {
 
   render = () => {
     return (
-      <div className="container">
-        <div className="row">
-          <form className="col form-signin">
+      <div className="">
+        <div className="">
+          <form className="">
             <input
               type="text"
               onChange={this.onUsernameChange}
